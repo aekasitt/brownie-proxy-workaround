@@ -25,3 +25,24 @@ def wrap_proxy(contract_container: ContractContainer = Impl, contract_name: str 
     impl_proxy       = ProjectContract(project, build={'abi': contract_container.abi, 'contractName': contract_name}, address=proxy.address)
   return impl_proxy
 ```
+
+## Contributions
+
+Clone the Repository to your local machine and set up your environment with `poetry`
+
+```bash
+pip install poetry
+poetry install
+```
+
+## Tests
+
+To run tests;
+
+```sh
+pytest tests/*
+```
+
+## License
+
+This project is licensed under the terms of the MIT license.
