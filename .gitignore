@@ -3,3 +3,10 @@ __pycache__
 .hypothesis/
 build/
 reports/
+# pytest
+.pytest_cache
+# macos
+**/.DS_Store
+# workspace settings
+.vscode
+.idea
