@@ -1,8 +1,9 @@
 # Workaround for Proxy Contracts on `eth-brownie`
 
-See `tests/proxy.py` on how I did my Proxy Contract wrapping using other ContractContainers
+See `tests/fixtures.py` on how I did my Proxy Contract wrapping using other ContractContainers
 
-The contracts in `contracts/` directory is a simple-to-use Proxy Example by `github/tagupta`'s repo [Proxy-Contract](https://github.com/tagupta/Proxy-Contract)
+The contracts in `contracts/` directory is a simple-to-use Proxy Example by `github/tagupta`;
+If interested, check out her contract repo [Proxy-Contract](https://github.com/tagupta/Proxy-Contract)
 
 ## TL;DR
 
