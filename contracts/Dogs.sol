@@ -4,7 +4,7 @@ import './Storage.sol';
 
 /**
  * @notice See [repo](https://github.com/tagupta/Proxy-Contract) for origincal contract code 
- * @author Tanu Gupta (tagupta)
+ * @author Tanu Gupta (github/tagupta)
  */
 contract Dogs is Storage {
   modifier onlyOwner() {

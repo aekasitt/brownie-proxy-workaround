@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 /**
  * @notice See [repo](https://github.com/tagupta/Proxy-Contract) for origincal contract code 
- * @author Tanu Gupta (tagupta)
+ * @author Tanu Gupta (github/tagupta)
  */
 contract Storage {
   mapping(string => uint) _uintStorage;
