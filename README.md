@@ -2,7 +2,7 @@
 
 See `tests/proxy.py` on how I did my Proxy Contract wrapping using other ContractContainers
 
-The contracts in `contracts/` directory is a simple-to-use Proxy Example by `github/tagupta`
+The contracts in `contracts/` directory is a simple-to-use Proxy Example by `github/tagupta`'s repo [Proxy-Contract](https://github.com/tagupta/Proxy-Contract)
 
 ## TL;DR
 
