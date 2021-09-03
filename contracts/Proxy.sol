@@ -2,6 +2,10 @@
 pragma solidity ^0.8.0;
 import './Storage.sol';
 
+/**
+ * @notice See [repo](https://github.com/tagupta/Proxy-Contract) for origincal contract code 
+ * @author Tanu Gupta (tagupta)
+ */
 contract Proxy is Storage {
   address currentAddress;
   constructor(address _address) {

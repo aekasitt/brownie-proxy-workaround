@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract Storage{
+/**
+ * @notice See [repo](https://github.com/tagupta/Proxy-Contract) for origincal contract code 
+ * @author Tanu Gupta (tagupta)
+ */
+contract Storage {
   mapping(string => uint) _uintStorage;
   mapping(string => address) _addressStorage;
   mapping(string => string) _stringStorage;
