@@ -1,6 +1,6 @@
 from os import getcwd
 from pytest import fixture
-from brownie import accounts, Token, TokenProxy, Wei
+from brownie import accounts, Dogs, Proxy, Wei
 from brownie.network.account import Account
 from brownie.network.contract import ProjectContract
 from brownie.project.main import compile_source, Project
@@ -32,31 +32,39 @@ def account() -> Account:
   return acct
 
 @fixture
-def deploy_token(account: Account) -> Token:
+def deploy_dogs(account: Account) -> Dogs:
   print(f'Account: { account } (balance={ account.balance() })')
   print('Deployment Test for Token')
-  token: Token = Token.deploy({'from': account})
-  print(f'Token: { token } (name={ token.name() }, symbol={ token.symbol() }, totalSupply={ token.totalSupply() })')
-  return token
+  dogs: Dogs = Dogs.deploy({'from': account})
+  print(f'Dogs: { dogs } (count={ dogs.getNumberOfDogs() })')
+  return dogs
 
 @fixture
-def deploy_proxy(account: Account, deploy_token: Token) -> TokenProxy:
+def deploy_proxy(account: Account, deploy_dogs: Dogs) -> Proxy:
   print('Deployment Test for Proxy')
-  token = deploy_token
-  print(f'Token: { token }')
-  proxy: TokenProxy = TokenProxy.deploy(token.address, b'', {'from': account})
-  print(f'Token Proxy: { proxy }')
+  dogs: Dogs = deploy_dogs
+  print(f'Dogs: { dogs }')
+  proxy: Proxy = Proxy.deploy(dogs.address, {'from': account})
+  print(f'Proxy: { proxy }')
   return proxy
 
-def test_wrap_proxy(deploy_proxy: TokenProxy, file_name: str = 'Token', contract_name: str = 'Token') -> Token:
+@fixture
+def wrap_proxy(deploy_proxy: Proxy, file_name: str = 'Dogs', contract_name: str = 'Dogs') -> Dogs:
   print('Wrapping Test for Proxy on Token')
-  proxy: TokenProxy = deploy_proxy
-  token_proxy: Token
+  proxy: Proxy = deploy_proxy
+  dogs_proxy: Dogs
   try:
-    token_proxy = Token.at(proxy.address)
+    dogs_proxy = Dogs.at(proxy.address)
   except ContractExists:
     with open(getcwd() + f'/contracts/{file_name}.sol') as f:
       tmp_project: Project = compile_source(f.read())
-      token_proxy          = ProjectContract(tmp_project, build={'abi': Token.abi, 'contractName': contract_name}, address=proxy.address)
-  print(f'Token (Proxy): { token_proxy } (name={ token_proxy.name() }, symbol={ token_proxy.symbol() }, totalSupply={ token_proxy.totalSupply() })')
-  return token_proxy
+      dogs_proxy           = ProjectContract(tmp_project, build={'abi': Dogs.abi, 'contractName': contract_name}, address=proxy.address)
+  print(f'Dogs (Proxy): { dogs_proxy } ({ dogs_proxy.getNumberOfDogs()})')
+  return dogs_proxy
+
+def test_proxy_dogs_params(account: Account, deploy_dogs: Dogs, wrap_proxy: Dogs):
+  dogs: Dogs       = deploy_dogs
+  dogs_proxy: Dogs = wrap_proxy
+  count: int       = 10
+  dogs_proxy.setNumberOfDogs(count, {'from': account})
+  assert dogs.getNumberOfDogs() == count
