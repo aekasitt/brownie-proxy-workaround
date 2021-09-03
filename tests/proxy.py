@@ -32,7 +32,7 @@ def account() -> Account:
   return acct
 
 @fixture
-def test_deploy_token(account: Account) -> Token:
+def deploy_token(account: Account) -> Token:
   print(f'Account: { account } (balance={ account.balance() })')
   print('Deployment Test for Token')
   token: Token = Token.deploy({'from': account})
@@ -40,17 +40,17 @@ def test_deploy_token(account: Account) -> Token:
   return token
 
 @fixture
-def test_deploy_proxy(account: Account, test_deploy_token: Token) -> TokenProxy:
+def deploy_proxy(account: Account, deploy_token: Token) -> TokenProxy:
   print('Deployment Test for Proxy')
-  token = test_deploy_token
+  token = deploy_token
   print(f'Token: { token }')
   proxy: TokenProxy = TokenProxy.deploy(token.address, b'', {'from': account})
-  print(f'Proxy: { proxy }')
+  print(f'Token Proxy: { proxy }')
   return proxy
 
-def test_wrap_proxy(test_deploy_proxy: TokenProxy, file_name: str = 'Token', contract_name: str = 'Token') -> Token:
+def test_wrap_proxy(deploy_proxy: TokenProxy, file_name: str = 'Token', contract_name: str = 'Token') -> Token:
   print('Wrapping Test for Proxy on Token')
-  proxy: TokenProxy = test_deploy_proxy
+  proxy: TokenProxy = deploy_proxy
   token_proxy: Token
   try:
     token_proxy = Token.at(proxy.address)
