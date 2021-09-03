@@ -13,21 +13,7 @@ TERM_NFMT: str  = '\033[0;0m'
 
 @fixture
 def admin() -> Account:
-  file_name: str = 'wallet.test.yml'
-  ### Load Mnemonic from YAML File ###
-  try:
-    with open(file_name) as f:
-      content = safe_load(f)
-      ### Read Mnemonic ###
-      mnemonic = content.get('mnemonic', None)
-      acct = accounts.from_mnemonic(mnemonic, count=1)
-  except FileNotFoundError:
-    print(f'{TERM_RED}Cannot find wallet mnemonic file defined at `{file_name}`.{TERM_NFMT}')
-    return
-  ### Transfer Initial Balance to Test WAllet ###
-  try:
-    accounts[0].transfer(acct, Wei('100 ether').to('wei'))
-  except ValueError: pass
+  acct = accounts[0]
   return acct
 
 @fixture
@@ -126,10 +112,14 @@ def init_wrapped_proxy_updated(admin: Account, wrap_proxy_updated: DogsUpdated):
   dogs_updated.initialize(admin, {'from': admin})
   return dogs_updated
 
-def test_4_set_number_of_dogs_updated(admin: Account, init_wrapped_proxy_updated: DogsUpdated):
+@fixture
+def non_admin() -> Account:
+  acct = accounts[1]
+  return acct
+
+def test_4_set_number_of_dogs_updated(admin: Account, non_admin: Account, init_wrapped_proxy_updated: DogsUpdated):
   print(f'{ TERM_BLUE }Test #4 Sets number of dogs with non-admin account{ TERM_NFMT }')
   dogs_updated: DogsUpdated = init_wrapped_proxy_updated
-  non_admin: Account        = accounts[1]
   ### Sets number of dogs by Non-Admin (Reverted) ###
   n: int = 10
   try:
