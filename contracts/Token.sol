@@ -472,7 +472,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
 /**
  * @dev Collection of functions related to the address type
  */
-library Address {
+library ProxiableAddress {
   /**
    * @dev Returns true if `account` is a contract.
    *
@@ -712,7 +712,7 @@ library Address {
  *
  * _Available since v4.1 for `address`, `bool`, `bytes32`, and `uint256`._
  */
-library StorageSlot {
+library ProxiableStorageSlot {
   struct AddressSlot {
     address value;
   }
@@ -766,12 +766,7 @@ library StorageSlot {
   }
 }
 
-contract Token is ERC20 {
-  constructor()
-    ERC20('Foo Fighters Token', 'FOO')
-  {
-    //
-  }
+abstract contract Proxiable {
   /**
    * keccak256("token.proxy.implementation") = '51058a80a65c3f590051d5ce5ca9d5dffa789ac503794b1f6453f168d396c59e';
    * _IMPLEMENTATION_SLOT = bytes32(uint256(keccak256("token.proxy.implementation") - 1));
@@ -788,15 +783,15 @@ contract Token is ERC20 {
    * @dev Returns the current implementation address.
    */
   function _getImplementation() internal view returns(address) {
-    return StorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value;
+    return ProxiableStorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value;
   }
 
   /**
    * @dev Stores a new address in the EIP1967 implementation slot.
    */
   function _setImplementation(address newImplementation) private {
-    require(Address.isContract(newImplementation), 'Token: new implementation is not a contract');
-    StorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value = newImplementation;
+    require(ProxiableAddress.isContract(newImplementation), 'Proxiable: new implementation is not a contract');
+    ProxiableStorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value = newImplementation;
   }
 
   /**
@@ -818,7 +813,15 @@ contract Token is ERC20 {
   internal {
     _upgradeTo(newImplementation);
     if (data.length > 0 || forceCall) {
-      Address.functionDelegateCall(newImplementation, data);
+      ProxiableAddress.functionDelegateCall(newImplementation, data);
     }
+  }
+}
+
+contract Token is ERC20, Proxiable {
+  constructor()
+    ERC20('Foo Fighters Token', 'FOO')
+  {
+    //
   }
 }
