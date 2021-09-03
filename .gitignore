@@ -7,3 +7,6 @@ reports/
 # Ignore yaml except few
 **/*.yml
 !brownie-config.yml
+
+# Ignore backup contracts in contractz folder
+contractz
