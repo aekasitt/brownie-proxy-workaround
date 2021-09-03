@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "brownie-proxy-workarounds"
+version = "0.1.0"
+description = "Workarounds observed for eth-brownie to use Proxy Contracts"
+authors = ["Sitt Guruvanich <aekasitt@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.7.10"
+eth-brownie = "^1.16.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.4"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
