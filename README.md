@@ -22,7 +22,8 @@ def wrap_proxy(contract_container: ContractContainer = Impl, contract_name: str 
     impl_proxy = Impl.at(proxy.address)
   except ContractExists:
     project: Project = get_loaded_projects()[0]
-    impl_proxy       = ProjectContract(project, build={'abi': contract_container.abi, 'contractName': contract_name}, address=proxy.address)
+    build: dict      = {'abi': contract_container.abi, 'contractName': contract_name}
+    impl_proxy       = ProjectContract(project, build=build, address=proxy.address)
   return impl_proxy
 ```
 
