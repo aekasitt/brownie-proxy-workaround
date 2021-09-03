@@ -3,3 +3,7 @@ __pycache__
 .hypothesis/
 build/
 reports/
+
+# Ignore yaml except few
+**/*.yml
+!brownie-config.yml
