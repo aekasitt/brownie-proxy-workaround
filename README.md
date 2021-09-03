@@ -12,6 +12,7 @@ The following snippet works.
 from brownie import Proxy, Impl
 from brownie.exceptions import ContractExists
 from brownie.network.contract import ProjectContract, ContractContainer
+from brownie.project.main import get_loaded_projects, Project
 
 def wrap_proxy(contract_container: ContractContainer = Impl, contract_name: str = 'Impl') -> Impl:
   impl: Impl   = Impl.at('0x...')  # Deplyed Impl
