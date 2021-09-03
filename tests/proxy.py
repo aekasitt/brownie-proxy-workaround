@@ -1,10 +1,23 @@
+#!/usr/bin/env python
+# coding:utf-8
+# Copyright (C) 2019-2021 All rights reserved.
+# FILENAME:  tests/proxy.py
+# VERSION: 	 1.0
+# CREATED: 	 2021-08-22 15:05
+# AUTHOR: 	 Aekasitt Guruvanich <aekazitt@gmail.com>
+# DESCRIPTION:
+#
+# HISTORY:
+#*************************************************************
+'''
+Test Suite for Proxying Contracts
+'''
 from pytest import fixture
 from brownie import accounts, Dogs, DogsUpdated, Proxy
 from brownie.network.account import Account
 from brownie.network.contract import ProjectContract, ContractContainer
 from brownie.project.main import get_loaded_projects, Project
 from brownie.exceptions import ContractExists, VirtualMachineError
-from yaml import safe_load
 
 TERM_BLUE: str  = '\033[1;34m'
 TERM_RED: str   = '\033[1;31m'
