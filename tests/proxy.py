@@ -1,5 +1,5 @@
 from pytest import fixture
-from brownie import accounts, Dogs, DogsUpdated, Proxy, Wei
+from brownie import accounts, Dogs, DogsUpdated, Proxy
 from brownie.network.account import Account
 from brownie.network.contract import ProjectContract, ContractContainer
 from brownie.project.main import get_loaded_projects, Project
